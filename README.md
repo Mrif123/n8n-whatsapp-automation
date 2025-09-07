@@ -58,10 +58,6 @@ When a user interacts, they automatically receive:
 
 ---
 
-## 🙏 Acknowledgment  
-Special thanks to **Ritesh Hegde sir** for his guidance and support throughout this project.  
-
----
 
 ## 📌 Author  
 👤 Mohammed Rifaiz  
