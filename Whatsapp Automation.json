@@ -1,0 +1,219 @@
+{
+  "name": "Whatsapp Automation",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "messages"
+        ],
+        "options": {}
+      },
+      "type": "n8n-nodes-base.whatsAppTrigger",
+      "typeVersion": 1,
+      "position": [
+        -512,
+        -176
+      ],
+      "id": "2ca97a45-1a87-4138-9ec8-d6471ff343c1",
+      "name": "WhatsApp Trigger",
+      "webhookId": "f07f4b89-d2ac-4c63-8a4b-8ae6360bcffb",
+      "credentials": {
+        "whatsAppTriggerApi": {
+          "id": "N44RNYs9yc3HvdHY",
+          "name": "WhatsApp OAuth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "743650215506401",
+        "recipientPhoneNumber": "={{ $('WhatsApp Trigger').item.json.contacts[0].wa_id }}",
+        "textBody": "={{ $json.content.parts[0].text }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1,
+      "position": [
+        64,
+        -176
+      ],
+      "id": "498e1862-9901-4c72-998a-96b031d2717f",
+      "name": "Send message",
+      "webhookId": "be01c617-8ca7-48bd-b9d7-a1293e94e3a2",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "d7NyVTjRAML4v1tW",
+          "name": "WhatsApp account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -512,
+        16
+      ],
+      "id": "d199aec0-c85f-440d-9777-9c6986a1ec20",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "phoneNumberId": "743650215506401",
+        "recipientPhoneNumber": "=918296313689",
+        "template": "tech_updates|en",
+        "components": {
+          "component": [
+            {
+              "type": "header",
+              "headerParameters": {
+                "parameter": [
+                  {
+                    "type": "image",
+                    "imageLink": "https://github.com/Mrif123/whatsapp-automation/blob/main/TECH-UPDATES.jpg?raw=true"
+                  }
+                ]
+              }
+            },
+            {
+              "bodyParameters": {
+                "parameter": [
+                  {
+                    "text": "=Mohammed Rifaiz"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1,
+      "position": [
+        -256,
+        16
+      ],
+      "id": "dfbcb3c6-b711-44bf-914c-a1c83af9261d",
+      "name": "Send template",
+      "webhookId": "1452eb2c-99c8-43cb-acb3-e6f8764050c5",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "d7NyVTjRAML4v1tW",
+          "name": "WhatsApp account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "Template Automation",
+        "height": 192,
+        "width": 832
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -592,
+        -16
+      ],
+      "typeVersion": 1,
+      "id": "ec95dd15-d321-4f50-b1aa-296bf8d0e344",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "WhatsApp Chatbot Automation",
+        "height": 240,
+        "width": 832,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -592,
+        -272
+      ],
+      "typeVersion": 1,
+      "id": "e4dfd1b7-9044-4eb4-82c8-fba8f47efe61",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-2.5-flash",
+          "mode": "list",
+          "cachedResultName": "models/gemini-2.5-flash"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=Respond to the question asked by the user:\n{{ $json.messages[0].text.body }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1,
+      "position": [
+        -256,
+        -176
+      ],
+      "id": "0150c0fd-8d67-417d-858b-b3a2e4a97665",
+      "name": "Message a model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "OB2d8jJTJLObMYkg",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "WhatsApp Trigger": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Send template",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "Send message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "1fb0a416-224a-4255-9332-a2451f2c7a95",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "f11399c3cb0d60c77d9da48b1deb1ba599b14ca23a99ff753647710135151635"
+  },
+  "id": "dBeRHqArpWyk1zPs",
+  "tags": []
+}
